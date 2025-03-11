@@ -11,7 +11,7 @@ import javax.net.ssl.X509TrustManager;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
-public class SSLVerification {
+public class SSLVerificationConfig {
 
     public TrustManager[] getTrustManagerThatAcceptsAllCertificates() {
         return new TrustManager[] { new X509TrustManager() {

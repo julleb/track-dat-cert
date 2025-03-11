@@ -3,7 +3,7 @@ package com.trackdatcert.repositories.certificate;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import com.trackdatcert.config.SSLVerification;
+import com.trackdatcert.config.SSLVerificationConfig;
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.KeyStore;
@@ -24,7 +24,7 @@ class TestWebCertificateRepository {
 
     @BeforeEach
     void setup() throws Exception {
-        SSLVerification.disableSSLVerification();
+        SSLVerificationConfig.disableSSLVerification();
         mockWebServer = new MockWebServer();
         mockWebServer.useHttps(getSSLContext().getSocketFactory(), false);
         mockWebServer.start();
