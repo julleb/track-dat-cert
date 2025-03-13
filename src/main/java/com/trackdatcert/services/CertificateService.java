@@ -6,6 +6,7 @@ import com.trackdatcert.repositories.certificate.WebCertificateRepository;
 import com.trackdatcert.services.model.CertificateDetails;
 import com.trackdatcert.services.model.CertificateUsageType;
 import com.trackdatcert.utils.ObjectUtils;
+import com.trackdatcert.utils.ServerPortUtils;
 import com.trackdatcert.utils.UrlUtils;
 import java.security.cert.X509Certificate;
 import lombok.AllArgsConstructor;
@@ -29,8 +30,8 @@ public class CertificateService {
             case SAML -> samlCertificateRepository.getCertificate(url);
             case WEB -> webCertificateRepository.getCertificate(url);
             case SERVER -> {
-                var host = UrlUtils.getHostFromUrl(url);
-                int port = UrlUtils.getPortFromUrl(url);
+                var host = ServerPortUtils.getHostFromString(url);
+                int port = ServerPortUtils.getPortFromString(url);
                 yield serverCertificateRepository.getCertificate(host, port);
             }
         };

@@ -22,7 +22,7 @@ public class UrlUtils {
         try {
             return new URI(url).toURL();
         } catch (URISyntaxException | MalformedURLException e) {
-            throw new IllegalArgumentException("Bad url " + url);
+            throw new IllegalArgumentException("Bad url " + url, e);
         }
     }
 
