@@ -11,7 +11,7 @@ import lombok.experimental.UtilityClass;
 public class UrlUtils {
 
     public URL getUrl(String url) {
-        Objects.requireNonNull(url, "url is required");
+        ObjectUtils.requireNonEmpty(url, "Url cannot be empty");
         if (!url.startsWith("https://")) {
             throw new IllegalArgumentException("url must start with https://");
         }

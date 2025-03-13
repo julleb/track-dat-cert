@@ -1,6 +1,7 @@
 package com.trackdatcert.repositories.certificate;
 
 import com.trackdatcert.config.SSLVerificationConfig;
+import com.trackdatcert.utils.ObjectUtils;
 import java.io.IOException;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
@@ -25,7 +26,7 @@ public class ServerCertificateRepository {
     }
 
     public X509Certificate getCertificate(String host, int port) {
-        Objects.requireNonNull(host, "Host cannot be null or empty");
+        ObjectUtils.requireNonEmpty(host, "Host cannot be empty");
         if (port < 1) {
             throw new IllegalArgumentException("Port cannot be less than 1");
         }

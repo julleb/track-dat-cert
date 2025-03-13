@@ -1,6 +1,7 @@
 package com.trackdatcert.repositories.certificate;
 
 import com.trackdatcert.config.WebClientConfig;
+import com.trackdatcert.utils.ObjectUtils;
 import java.security.cert.X509Certificate;
 import java.util.Objects;
 import lombok.AllArgsConstructor;
@@ -18,7 +19,7 @@ import org.springframework.web.reactive.function.client.WebClientResponseExcepti
 public class SAMLCertificateRepository {
 
     public X509Certificate getCertificate(String url) {
-        Objects.requireNonNull(url, "url cannot be null");
+        ObjectUtils.requireNonEmpty(url, "Url cannot be empty");
         var webClient = WebClientConfig.createWebClient(url);
         var responseEntity = webClient.get()
             .accept(MediaType.APPLICATION_XML)
