@@ -9,11 +9,16 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class UrlUtils {
 
-    public URL getUrl(String url) {
-        ObjectUtils.requireNonEmpty(url, "Url cannot be empty");
+    public URL getHttpsUrl(String url) {
+        var urlObj = getUrl(url);
         if (!url.startsWith("https://")) {
             throw new IllegalArgumentException("url must start with https://");
         }
+        return urlObj;
+    }
+
+    public URL getUrl(String url) {
+        ObjectUtils.requireNonEmpty(url, "Url cannot be empty");
         try {
             return new URI(url).toURL();
         } catch (URISyntaxException | MalformedURLException e) {

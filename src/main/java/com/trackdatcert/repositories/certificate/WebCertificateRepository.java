@@ -22,7 +22,7 @@ public class WebCertificateRepository {
     }
 
     private X509Certificate getCertificateFromUrl(String url) throws IOException {
-        URL urlObj = UrlUtils.getUrl(url);
+        URL urlObj = UrlUtils.getHttpsUrl(url);
         HttpsURLConnection connection = (HttpsURLConnection) urlObj.openConnection();
         try {
             return getCertificate(connection);
