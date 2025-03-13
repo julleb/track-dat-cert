@@ -21,4 +21,14 @@ public class UrlUtils {
             throw new IllegalArgumentException("Bad url " + url);
         }
     }
+
+    public String getHostFromUrl(String url) {
+        var urlObj = getUrl(url);
+        return urlObj.getHost();
+    }
+
+    public int getPortFromUrl(String url) {
+        var urlObj = getUrl(url);
+        return urlObj.getPort();
+    }
 }

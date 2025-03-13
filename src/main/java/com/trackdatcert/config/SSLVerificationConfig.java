@@ -27,11 +27,17 @@ public class SSLVerificationConfig {
         } };
     }
 
-    @PostConstruct
-    public void disableSSLVerification() throws NoSuchAlgorithmException, KeyManagementException {
+    public SSLContext getAcceptAllCertificatesSslContext()
+        throws KeyManagementException, NoSuchAlgorithmException {
         SSLContext sc = SSLContext.getInstance("TLS");
         sc.init(null, getTrustManagerThatAcceptsAllCertificates(),
             new java.security.SecureRandom());
+        return sc;
+    }
+
+    @PostConstruct
+    public void disableSSLVerification() throws NoSuchAlgorithmException, KeyManagementException {
+        var sc = getAcceptAllCertificatesSslContext();
         // Set the default SSLSocketFactory to use our custom SSLContext
         HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
         // Set the default HostnameVerifier to always return true (bypassing hostname verification)
