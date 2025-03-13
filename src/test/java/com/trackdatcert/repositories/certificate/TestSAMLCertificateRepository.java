@@ -1,9 +1,12 @@
 package com.trackdatcert.repositories.certificate;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.IOException;
+import java.math.BigInteger;
+import java.security.cert.CertificateException;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,7 +23,7 @@ class TestSAMLCertificateRepository {
     private static final String METADATA_FILE_NAME = "saml-metadata.xml";
 
     @BeforeEach
-    void setup() throws IOException {
+    void setup() throws IOException, CertificateException {
         mockWebServer = new MockWebServer();
         mockWebServer.start();
         url = mockWebServer.url("/")
@@ -38,6 +41,9 @@ class TestSAMLCertificateRepository {
             .setResponseCode(200));
         var cert = samlCertificateRepository.getCertificate(url);
         assertNotNull(cert);
+
+        BigInteger expectedSerialNumber = new BigInteger("162747978566652954440107633768407450084");
+        assertEquals(expectedSerialNumber, cert.getSerialNumber());
     }
 
     @Test
