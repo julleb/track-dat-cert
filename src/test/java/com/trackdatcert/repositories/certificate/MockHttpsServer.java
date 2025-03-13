@@ -1,7 +1,7 @@
 package com.trackdatcert.repositories.certificate;
 
+import com.trackdatcert.repositories.KeystoreTestData;
 import java.io.IOException;
-import java.io.InputStream;
 import java.security.KeyStore;
 import java.security.SecureRandom;
 import javax.net.ssl.KeyManagerFactory;
@@ -12,7 +12,6 @@ import okhttp3.mockwebserver.MockWebServer;
 class MockHttpsServer {
 
     private final MockWebServer mockWebServer;
-    private static final String KEY_STORE_NAME = "test.jks";
 
     @Getter
     private String url;
@@ -33,16 +32,8 @@ class MockHttpsServer {
     }
 
     private SSLContext getSSLContext() throws Exception {
-        var inputStream = TestWebCertificateRepository.class.getClassLoader()
-            .getResourceAsStream(KEY_STORE_NAME);
-        KeyStore ks = loadKeyStore(inputStream, "");
+        var ks = KeystoreTestData.getKeyStore();
         return createSSLContext(ks, "");
-    }
-
-    public KeyStore loadKeyStore(InputStream is, String keystorePassword) throws Exception {
-        KeyStore keyStore = KeyStore.getInstance("JKS");
-        keyStore.load(is, keystorePassword.toCharArray());
-        return keyStore;
     }
 
     public SSLContext createSSLContext(KeyStore keyStore, String keystorePassword)

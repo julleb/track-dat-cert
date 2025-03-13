@@ -2,9 +2,11 @@ package com.trackdatcert.services.model;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.ToString;
 
 @Builder
 @Getter
+@ToString
 public class CertificateDetails {
     private String serialNumber;
     private String issuer;
