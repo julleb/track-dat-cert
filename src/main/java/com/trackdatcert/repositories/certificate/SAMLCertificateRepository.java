@@ -78,7 +78,8 @@ public class SAMLCertificateRepository {
         String encodedCertificateString = matcher.group()
             .replace("X509Certificate>", "")
             .replace("</", "")
-            .replace("\r\n", "");
+            .replace("\r\n", "")
+            .replace("\n", "");
 
         return getCertificateFromBase64String(encodedCertificateString);
     }
