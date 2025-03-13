@@ -18,18 +18,23 @@ public class WebCertificateRepository {
     public X509Certificate getCertificate(String url) {
         try {
             return getCertificateFromUrl(url);
-        } catch (IOException | NoSuchAlgorithmException | KeyManagementException e) {
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    private X509Certificate getCertificateFromUrl(String url)
-        throws IOException, NoSuchAlgorithmException, KeyManagementException {
+    private X509Certificate getCertificateFromUrl(String url) throws IOException {
         URL urlObj = UrlUtils.getUrl(url);
-
         HttpsURLConnection connection = (HttpsURLConnection) urlObj.openConnection();
-        connection.connect();
+        try {
+            return getCertificate(connection);
+        } finally {
+            connection.disconnect();
+        }
+    }
 
+    private X509Certificate getCertificate(HttpsURLConnection connection) throws IOException {
+        connection.connect();
         // TODO return the chain as well?
         Certificate[] certs = connection.getServerCertificates();
         if (certs != null && certs.length > 0) {
