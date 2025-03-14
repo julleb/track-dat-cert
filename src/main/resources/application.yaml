@@ -7,3 +7,25 @@ server:
 logging:
   level:
     root: INFO
+    org:
+      flywaydb: INFO
+
+
+#h2 database configuration
+spring:
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driverClassName: org.h2.Driver
+    username: sa
+    password: password
+  flyway:
+    enabled: true
+    #url: ${spring.datasource.url}
+    #user: ${spring.datasource.username}
+    password: ${spring.datasource.password}
+    locations: classpath:db/migration
+    baseline-on-migrate: true
+    baseline-version: 0
+    validate-on-migrate: false
+
+
