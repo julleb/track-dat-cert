@@ -1,4 +1,4 @@
-package com.trackdatcert.repositories;
+package com.trackdatcert;
 
 import java.io.InputStream;
 import java.security.KeyStore;

@@ -1,6 +1,6 @@
 package com.trackdatcert.repositories.certificate;
 
-import com.trackdatcert.repositories.KeystoreTestData;
+import com.trackdatcert.KeystoreTestData;
 import java.io.IOException;
 import java.security.KeyStore;
 import java.security.SecureRandom;
