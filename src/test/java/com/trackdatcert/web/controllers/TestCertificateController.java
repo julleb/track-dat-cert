@@ -1,6 +1,8 @@
 package com.trackdatcert.web.controllers;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.trackdatcert.services.CertificateService;
@@ -11,6 +13,7 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 @WebMvcTest(CertificateController.class)
@@ -50,6 +53,14 @@ class TestCertificateController {
                 .build());
         mockMvc.perform(get("/certificates/server?url=www.example.com"))
             .andExpect(status().isOk());
+    }
+
+    @Test
+    void testGetCertificates_whenBadType() throws Exception {
+        mockMvc.perform(get("/certificates/abc?url=www.example.com"))
+            .andExpect(status().isBadRequest())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+            .andExpect(jsonPath("$.message").exists());
     }
 
 }

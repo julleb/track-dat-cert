@@ -13,7 +13,7 @@ class ControllerExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorMessage> handleException(Exception e) {
         log.error("Exception caught: {}", e.getMessage(), e);
-        var errorMsg = ErrorMessage.builder().msg(e.getMessage()).build();
+        var errorMsg = ErrorMessage.builder().message(e.getMessage()).build();
         return switch(e) {
             case IllegalArgumentException ignored:
                 yield ResponseEntity.badRequest().body(errorMsg);
