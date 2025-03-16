@@ -27,7 +27,7 @@ public class TrackedCertificateService {
         return List.of();
     }
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void addTrackedCertificate(TrackedCertificate trackedCertificate, String userId) {
         List<CertificateEntityDTO> certificateEntityDTOList = new ArrayList<>();
         for (var certDetails : trackedCertificate.getCertificateDetails()) {
