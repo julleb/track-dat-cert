@@ -40,7 +40,7 @@ public class TrackedCertificateService {
             certificateEntityDTOList.add(certEntityDto);
         }
 
-        var trackedEntityDTO = TrackedCertificateEntityDTO.builder()
+        var trackedEntityDTO = TrackedCertificateEntityDTO.createBuilder()
             .description(trackedCertificate.getDescription())
             .name(trackedCertificate.getName())
             .url(trackedCertificate.getUrl())

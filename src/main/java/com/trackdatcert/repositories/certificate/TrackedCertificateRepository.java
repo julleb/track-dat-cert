@@ -6,6 +6,7 @@ import com.trackdatcert.utils.SQLUtils;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicLong;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -26,10 +27,11 @@ public class TrackedCertificateRepository {
         params.addValue("name", trackedCertificateEntityDTO.getName())
             .addValue("description", trackedCertificateEntityDTO.getDescription())
             .addValue("url", trackedCertificateEntityDTO.getUrl())
-            .addValue("cert_type", trackedCertificateEntityDTO.getCertificateType());
+            .addValue("cert_type", trackedCertificateEntityDTO.getCertificateType())
+            .addValue("createdByUserId", trackedCertificateEntityDTO.getCreatedByUserId());
         int updated = jdbcTemplate.update(
-            "INSERT INTO tracked_certificates (name, description, url, cert_type)" +
-                " VALUES (:name, :description, :url, :cert_type)", params);
+            "INSERT INTO tracked_certificates (name, description, url, cert_type, created_by_user_id)" +
+                " VALUES (:name, :description, :url, :cert_type, :createdByUserId)", params);
         if (updated != 1) {
             throw new IncorrectResultSizeDataAccessException("Failed to insert certificate", 1,
                 updated);
@@ -43,7 +45,6 @@ public class TrackedCertificateRepository {
         Objects.requireNonNull(trackedCertId, "Failed to get tracked certificate id");
         trackedCertificateEntityDTO.setId(trackedCertId);
         storeCertificates(trackedCertificateEntityDTO);
-
     }
 
     private void storeCertificates(TrackedCertificateEntityDTO trackedCertificateEntityDTO) {
@@ -69,24 +70,27 @@ public class TrackedCertificateRepository {
     public TrackedCertificateEntityDTO getTrackedCertificate(String name) {
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("name", name);
-        var trackedCertEntity =
+        AtomicLong trackedCertId = new AtomicLong();
+        var trackedCertEntityBuilder =
             jdbcTemplate.query("SELECT * FROM tracked_certificates WHERE name = :name", params,
                 rs -> {
                     if (rs.next()) {
-                        return TrackedCertificateEntityDTO.builder()
-                            .id(rs.getLong("tracked_certificates_id"))
+                        long id = rs.getLong("tracked_certificates_id");
+                        trackedCertId.set(id);
+                        return TrackedCertificateEntityDTO.createBuilder()
+                            .id(id)
                             .name(rs.getString("name"))
                             .description(rs.getString("description"))
                             .url(rs.getString("url"))
-                            .certificateType(rs.getInt("cert_type"))
-                            .build();
+                            .createdByUserId(rs.getString("created_by_user_id"))
+                            .certificateType(rs.getInt("cert_type"));
                     }
                     throw new EmptyResultDataAccessException(
                         "No certificate found with name: " + name, 1);
                 });
 
         params = new MapSqlParameterSource();
-        params.addValue("tracked_certificates_id", trackedCertEntity.getId());
+        params.addValue("tracked_certificates_id", trackedCertId.get());
         var certEntityList = jdbcTemplate.query(
             "SELECT * FROM certificates WHERE tracked_certificates_id = :tracked_certificates_id",
             params, rs -> {
@@ -105,12 +109,12 @@ public class TrackedCertificateRepository {
                 if (certList.isEmpty()) {
                     throw new EmptyResultDataAccessException(
                         "No certificates found for tracked certificate with id: " +
-                            trackedCertEntity.getId(), 1);
+                            trackedCertId, 1);
                 }
                 return certList;
             });
-        trackedCertEntity.setCertificates(certEntityList);
-        return trackedCertEntity;
+        trackedCertEntityBuilder.certificates(certEntityList);
+        return trackedCertEntityBuilder.build();
     }
 
 }

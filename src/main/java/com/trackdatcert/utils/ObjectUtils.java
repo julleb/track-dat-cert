@@ -8,6 +8,13 @@ import org.springframework.util.StringUtils;
 @UtilityClass
 public class ObjectUtils {
 
+
+    public <T> void requireNonNull(T object, String msg) {
+        if (object == null) {
+            throw new IllegalArgumentException(msg);
+        }
+    }
+
     public <T> void requireNonEmpty(T object, String msg) {
         if (object == null) {
             throw new IllegalArgumentException(msg);

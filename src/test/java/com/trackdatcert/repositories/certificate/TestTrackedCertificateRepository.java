@@ -37,12 +37,13 @@ class TestTrackedCertificateRepository {
             .commonName("myCommonName")
             .issuer("myIssuer")
             .build();
-        var dto = TrackedCertificateEntityDTO.builder()
+        var dto = TrackedCertificateEntityDTO.createBuilder()
             .name("myName")
             .description("myDescription")
             .url("myUrl")
             .certificateType(1)
             .certificates(List.of(certDto))
+            .createdByUserId("userAbc")
             .build();
 
         trackedCertificateRepository.saveTrackedCertificate(dto);
@@ -52,6 +53,7 @@ class TestTrackedCertificateRepository {
         assertEquals(dto.getDescription(), trackedCert.getDescription());
         assertEquals(dto.getUrl(), trackedCert.getUrl());
         assertEquals(dto.getCertificateType(), trackedCert.getCertificateType());
+        assertEquals(dto.getCreatedByUserId(), trackedCert.getCreatedByUserId());
 
         assertEquals(1, trackedCert.getCertificates().size());
         var storedCertDto = trackedCert.getCertificates().get(0);
