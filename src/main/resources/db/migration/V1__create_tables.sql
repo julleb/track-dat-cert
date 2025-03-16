@@ -3,7 +3,8 @@ create table TRACKED_CERTIFICATES (
     name varchar(50) unique not null,
     description varchar(255) not null,
     url varchar(255) not null,
-    cert_type int not null
+    cert_type int not null,
+    created_by_user_id varchar(100) not null
 );
 
 create table CERTIFICATES (

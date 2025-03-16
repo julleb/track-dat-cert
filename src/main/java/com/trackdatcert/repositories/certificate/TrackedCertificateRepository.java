@@ -2,7 +2,6 @@ package com.trackdatcert.repositories.certificate;
 
 import com.trackdatcert.repositories.certificate.model.CertificateEntityDTO;
 import com.trackdatcert.repositories.certificate.model.TrackedCertificateEntityDTO;
-import com.trackdatcert.utils.ObjectUtils;
 import com.trackdatcert.utils.SQLUtils;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,15 +42,19 @@ public class TrackedCertificateRepository {
             Long.class);
         Objects.requireNonNull(trackedCertId, "Failed to get tracked certificate id");
         trackedCertificateEntityDTO.setId(trackedCertId);
+        storeCertificates(trackedCertificateEntityDTO);
 
+    }
+
+    private void storeCertificates(TrackedCertificateEntityDTO trackedCertificateEntityDTO) {
         for (var cert : trackedCertificateEntityDTO.getCertificates()) {
-            params = new MapSqlParameterSource();
+            var params = new MapSqlParameterSource();
             params.addValue("tracked_certificates_id", trackedCertificateEntityDTO.getId())
                 .addValue("valid_from", SQLUtils.getSqlDate(cert.getValidFrom()))
                 .addValue("valid_to", SQLUtils.getSqlDate(cert.getValidTo()))
                 .addValue("commonName", cert.getCommonName())
                 .addValue("issuer", cert.getIssuer());
-            updated = jdbcTemplate.update(
+            var updated = jdbcTemplate.update(
                 "INSERT INTO certificates (tracked_certificates_id, valid_from, " +
                     "valid_to, common_name, issuer) " +
                     "VALUES (:tracked_certificates_id, :valid_from, :valid_to, :commonName, :issuer)",

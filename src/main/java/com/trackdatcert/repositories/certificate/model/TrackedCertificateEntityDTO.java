@@ -19,4 +19,5 @@ public class TrackedCertificateEntityDTO {
     private int certificateType;
     @Setter
     private List<CertificateEntityDTO> certificates;
+    private String createdByUserId;
 }
