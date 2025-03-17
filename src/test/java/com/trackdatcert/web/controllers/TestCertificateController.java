@@ -5,9 +5,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.trackdatcert.services.CertificateService;
-import com.trackdatcert.services.model.CertificateDetails;
-import com.trackdatcert.services.model.CertificateUsageType;
+import com.trackdatcert.services.certificate.CertificateService;
+import com.trackdatcert.services.certificate.model.CertificateDetails;
+import com.trackdatcert.services.certificate.model.CertificateUsageType;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;

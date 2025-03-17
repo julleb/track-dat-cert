@@ -1,13 +1,12 @@
-package com.trackdatcert.services;
+package com.trackdatcert.services.certificate;
 
 import com.trackdatcert.repositories.certificate.SAMLCertificateRepository;
 import com.trackdatcert.repositories.certificate.ServerCertificateRepository;
 import com.trackdatcert.repositories.certificate.WebCertificateRepository;
-import com.trackdatcert.services.model.CertificateDetails;
-import com.trackdatcert.services.model.CertificateUsageType;
+import com.trackdatcert.services.certificate.model.CertificateDetails;
+import com.trackdatcert.services.certificate.model.CertificateUsageType;
 import com.trackdatcert.utils.ObjectUtils;
 import com.trackdatcert.utils.ServerPortUtils;
-import com.trackdatcert.utils.UrlUtils;
 import java.security.cert.X509Certificate;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

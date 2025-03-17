@@ -1,4 +1,4 @@
-package com.trackdatcert.services;
+package com.trackdatcert.services.certificate;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -6,8 +6,8 @@ import com.trackdatcert.KeystoreTestData;
 import com.trackdatcert.repositories.certificate.SAMLCertificateRepository;
 import com.trackdatcert.repositories.certificate.ServerCertificateRepository;
 import com.trackdatcert.repositories.certificate.WebCertificateRepository;
-import com.trackdatcert.services.model.CertificateDetails;
-import com.trackdatcert.services.model.CertificateUsageType;
+import com.trackdatcert.services.certificate.model.CertificateDetails;
+import com.trackdatcert.services.certificate.model.CertificateUsageType;
 import java.security.cert.X509Certificate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

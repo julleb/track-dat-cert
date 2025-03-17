@@ -1,8 +1,8 @@
 package com.trackdatcert.web.controllers;
 
-import com.trackdatcert.services.CertificateService;
-import com.trackdatcert.services.model.CertificateDetails;
-import com.trackdatcert.services.model.CertificateUsageType;
+import com.trackdatcert.services.certificate.CertificateService;
+import com.trackdatcert.services.certificate.model.CertificateDetails;
+import com.trackdatcert.services.certificate.model.CertificateUsageType;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;

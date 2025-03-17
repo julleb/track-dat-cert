@@ -1,4 +1,4 @@
-package com.trackdatcert.services.model;
+package com.trackdatcert.services.certificate.model;
 
 public enum CertificateUsageType {
     SAML,
