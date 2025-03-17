@@ -23,7 +23,12 @@ class TrackedCertificateFetcher {
     }
 
     public List<TrackedCertificate> getTrackedCertificatesForUser(String userId) {
-        return List.of();
+        List<TrackedCertificateEntityDTO> list = trackedCertificateRepository.getTrackedCertificatesCreatedByUserId(userId);
+        List<TrackedCertificate> trackedCertificateList = new ArrayList<>();
+        for(var trackedCertDto : list) {
+            trackedCertificateList.add(convertToTrackedCertificate(trackedCertDto));
+        }
+        return trackedCertificateList;
     }
 
     private TrackedCertificate convertToTrackedCertificate(
