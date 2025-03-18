@@ -1,5 +1,7 @@
 package com.trackdatcert.web.controllers;
 
+import static com.trackdatcert.web.controllers.TrackedCertificateController.RESOURCE_NAME;
+
 import com.trackdatcert.services.certificate.TrackedCertificateService;
 import com.trackdatcert.services.certificate.model.TrackedCertificate;
 import java.util.List;
@@ -14,12 +16,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/trackedCertificates")
+@RequestMapping(RESOURCE_NAME)
 @Slf4j
 @AllArgsConstructor
 public class TrackedCertificateController {
 
     private final TrackedCertificateService trackedCertificateService;
+    static final String RESOURCE_NAME = "/trackedCertificates";
 
     @GetMapping
     public ResponseEntity<List<TrackedCertificate>> getTrackedCertificatesForUser() {

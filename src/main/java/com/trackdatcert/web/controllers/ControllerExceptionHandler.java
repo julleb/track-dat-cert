@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-@ControllerAdvice(assignableTypes = {CertificateController.class})
+@ControllerAdvice(assignableTypes = {CertificateController.class, TrackedCertificateController.class})
 @Slf4j
 class ControllerExceptionHandler {
 
