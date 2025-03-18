@@ -17,7 +17,6 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootTest
-@Transactional //rollback after each test
 class TestTrackedCertificateRepository {
 
     @Autowired
@@ -27,11 +26,9 @@ class TestTrackedCertificateRepository {
     private final String userId = "userAbc";
 
     private CertificateEntityDTO.CertificateEntityDTOBuilder certificateEntityDTOBuilder =
-        CertificateEntityDTO.builder()
-            .trackedCertificateEntityId(1)
-            .id(1)
-            .validFrom(1)
-            .validTo(2)
+        CertificateEntityDTO.createBuilder()
+            .validFrom(System.currentTimeMillis())
+            .validTo(System.currentTimeMillis())
             .commonName("myCommonName")
             .issuer("myIssuer");
 
@@ -50,6 +47,7 @@ class TestTrackedCertificateRepository {
     }
 
     @Test
+    @Transactional
     void testSaveTrackedCertificate() {
         var certDto = certificateEntityDTOBuilder
             .build();
@@ -59,7 +57,7 @@ class TestTrackedCertificateRepository {
 
         trackedCertificateRepository.saveTrackedCertificate(dto);
         var trackedCert = trackedCertificateRepository.getTrackedCertificate(dto.getName());
-        assertEquals(1, trackedCert.getId());
+        assertTrue(trackedCert.getId() > 0);
         assertEquals(dto.getName(), trackedCert.getName());
         assertEquals(dto.getDescription(), trackedCert.getDescription());
         assertEquals(dto.getUrl(), trackedCert.getUrl());
@@ -73,11 +71,13 @@ class TestTrackedCertificateRepository {
     }
 
     @Test
+    @Transactional
     void testGetTrackedCertificate_whenNotExists() {
         assertThrows(EmptyResultDataAccessException.class, () -> trackedCertificateRepository.getTrackedCertificate("nonExisting"));
     }
 
     @Test
+    @Transactional
     void testGetTrackedCertificateCreatedByUserId() {
         var certDto = certificateEntityDTOBuilder
             .build();
@@ -100,6 +100,7 @@ class TestTrackedCertificateRepository {
     }
 
     @Test
+    @Transactional
     void testGetTrackedCertificateCreatedByUserId_whenNoCerts() {
         var result = trackedCertificateRepository.getTrackedCertificatesCreatedByUserId(userId);
         assertTrue(result.isEmpty());

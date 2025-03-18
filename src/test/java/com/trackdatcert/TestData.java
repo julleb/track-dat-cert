@@ -21,8 +21,8 @@ public class TestData {
                 .serialNumber("serialNumber")
                 .issuer("issuerTest")
                 .commonName("commonTest")
-                .validFrom(1L)
-                .validTo(2L)
+                .validFrom(System.currentTimeMillis())
+                .validTo(System.currentTimeMillis())
                 .build()))
             .url("test");
     }

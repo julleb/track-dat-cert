@@ -22,7 +22,7 @@ class TrackedCertificateCreator {
     public void addTrackedCertificate(TrackedCertificate trackedCertificate, String userId) {
         List<CertificateEntityDTO> certificateEntityDTOList = new ArrayList<>();
         for (var certDetails : trackedCertificate.getCertificateDetails()) {
-            var certEntityDto = CertificateEntityDTO.builder()
+            var certEntityDto = CertificateEntityDTO.createBuilder()
                 .commonName(certDetails.getCommonName())
                 .validTo(certDetails.getValidTo())
                 .issuer(certDetails.getIssuer())

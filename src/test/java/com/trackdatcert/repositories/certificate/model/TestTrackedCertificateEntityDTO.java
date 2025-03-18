@@ -12,6 +12,14 @@ class TestTrackedCertificateEntityDTO {
 
     @BeforeEach
     void setup() {
+        var certEntityDto = CertificateEntityDTO.readBuilder()
+            .validTo(System.currentTimeMillis())
+            .validFrom(System.currentTimeMillis())
+            .validTo(System.currentTimeMillis())
+            .commonName("myCommonName")
+            .issuer("myIssuer")
+            .build();
+
         builder = TrackedCertificateEntityDTO.createBuilder()
             .id(1)
             .name("name")
@@ -19,7 +27,7 @@ class TestTrackedCertificateEntityDTO {
             .url("url")
             .certificateType(1)
             .createdByUserId("userId")
-            .certificates(List.of(new CertificateEntityDTO.CertificateEntityDTOBuilder().build()));
+            .certificates(List.of(certEntityDto));
     }
 
     @Test

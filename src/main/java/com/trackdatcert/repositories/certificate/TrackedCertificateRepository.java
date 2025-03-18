@@ -131,7 +131,7 @@ public class TrackedCertificateRepository {
     }
 
     private CertificateEntityDTO getCertificateEntityDTO(ResultSet rs) throws SQLException {
-        return CertificateEntityDTO.builder()
+        return CertificateEntityDTO.readBuilder()
             .trackedCertificateEntityId(rs.getLong("tracked_certificates_id"))
             .id(rs.getLong("certificate_id"))
             .validFrom(SQLUtils.getEpoch(rs.getDate("valid_from")))
