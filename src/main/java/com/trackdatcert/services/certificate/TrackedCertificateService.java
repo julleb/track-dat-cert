@@ -16,7 +16,8 @@ public class TrackedCertificateService {
     private final AuthenticationService authenticationService;
 
 
-    public List<TrackedCertificate> getTrackedCertificatesForUser(String userId) {
+    public List<TrackedCertificate> getTrackedCertificatesForCurrentUser() {
+        String userId = authenticationService.getCurrentUser();
         return trackedCertificateFetcher.getTrackedCertificatesForUser(userId);
     }
 
