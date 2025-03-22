@@ -31,7 +31,8 @@ public class TrackedCertificateController {
     }
 
     @PostMapping
-    public ResponseEntity<String> createTrackedCertificate() {
+    public ResponseEntity<String> createTrackedCertificate(TrackedCertificate trackedCertificate) {
+        trackedCertificateService.addTrackedCertificate(trackedCertificate);
         return ResponseEntity.noContent().build();
     }
 

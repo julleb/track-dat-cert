@@ -1,7 +1,9 @@
 package com.trackdatcert.web.controllers;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.trackdatcert.TestData;
 import com.trackdatcert.services.certificate.TrackedCertificateService;
+import com.trackdatcert.services.certificate.model.TrackedCertificate;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,6 +14,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -60,5 +63,19 @@ class TestTrackedCertificateController {
             .andExpect(status().is5xxServerError())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(jsonPath("$.message").exists());
+    }
+
+
+    @Test
+    void testCreateTrackedCertificate() throws Exception {
+        var trackedCertificate = TestData.getTrackedCertificateBuilder().build();
+        String json = new ObjectMapper().writeValueAsString(trackedCertificate);
+
+        mockMvc.perform(post(TrackedCertificateController.RESOURCE_NAME)
+                .content(json))
+            .andExpect(status().isNoContent());
+
+        Mockito.verify(trackedCertificateService, Mockito.times(1))
+            .addTrackedCertificate(Mockito.any(TrackedCertificate.class));
     }
 }
