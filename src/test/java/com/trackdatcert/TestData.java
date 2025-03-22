@@ -17,16 +17,13 @@ public class TestData {
             .description("test")
             .url("https://saml.se")
             .usageType(CertificateUsageType.SAML)
-            .certificateDetails(List.of(getCertificateDetailsBuilder().build()))
+            .certificateDetails(List.of(CertificateDetails.builder()
+                .serialNumber("serialNumber")
+                .issuer("issuerTest")
+                .commonName("commonTest")
+                .validFrom(System.currentTimeMillis())
+                .validTo(System.currentTimeMillis())
+                .build()))
             .url("test");
-    }
-
-    public CertificateDetails.CertificateDetailsBuilder getCertificateDetailsBuilder() {
-        return CertificateDetails.builder()
-            .serialNumber("serialNumber")
-            .issuer("issuerTest")
-            .commonName("commonTest")
-            .validFrom(System.currentTimeMillis())
-            .validTo(System.currentTimeMillis());
     }
 }

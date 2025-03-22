@@ -4,7 +4,6 @@ import static com.trackdatcert.web.controllers.TrackedCertificateController.RESO
 
 import com.trackdatcert.services.certificate.TrackedCertificateService;
 import com.trackdatcert.services.certificate.model.TrackedCertificate;
-import com.trackdatcert.web.controllers.model.TrackedCertificateResponse;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,10 +25,9 @@ public class TrackedCertificateController {
     static final String RESOURCE_NAME = "/trackedCertificates";
 
     @GetMapping
-    public ResponseEntity<List<TrackedCertificateResponse>> getTrackedCertificatesForUser() {
+    public ResponseEntity<List<TrackedCertificate>> getTrackedCertificatesForUser() {
         var trackedCerts = trackedCertificateService.getTrackedCertificatesForCurrentUser();
-        var response = Utils.convertToResponse(trackedCerts);
-        return ResponseEntity.ok().body(response);
+        return ResponseEntity.ok().body(trackedCerts);
     }
 
     @PostMapping

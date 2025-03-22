@@ -2,8 +2,6 @@ package com.trackdatcert.web.controllers;
 
 import com.trackdatcert.TestData;
 import com.trackdatcert.services.certificate.TrackedCertificateService;
-import com.trackdatcert.utils.TimeUtils;
-import java.time.LocalDate;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -44,12 +42,12 @@ class TestTrackedCertificateController {
             .andExpect(jsonPath("$[0].name").value(trackedCertificate.getName()))
             .andExpect(jsonPath("$[0].description").value(trackedCertificate.getDescription()))
             .andExpect(jsonPath("$[0].url").value(trackedCertificate.getUrl()))
-            .andExpect(jsonPath("$[0].type").value(trackedCertificate.getUsageType().name()))
+            .andExpect(jsonPath("$[0].usageType").value(trackedCertificate.getUsageType().name()))
             .andExpect(jsonPath("$[0].certificateDetails[0].serialNumber").value(trackedCertificate.getCertificateDetails().getFirst().getSerialNumber()))
             .andExpect(jsonPath("$[0].certificateDetails[0].issuer").value(trackedCertificate.getCertificateDetails().getFirst().getIssuer()))
             .andExpect(jsonPath("$[0].certificateDetails[0].commonName").value(trackedCertificate.getCertificateDetails().getFirst().getCommonName()))
-            .andExpect(jsonPath("$[0].certificateDetails[0].validFrom").value(TimeUtils.getDate(trackedCertificate.getCertificateDetails().getFirst().getValidFrom()).toString()))
-            .andExpect(jsonPath("$[0].certificateDetails[0].validTo").value(TimeUtils.getDate(trackedCertificate.getCertificateDetails().getFirst().getValidTo()).toString()));
+            .andExpect(jsonPath("$[0].certificateDetails[0].validFrom").value(trackedCertificate.getCertificateDetails().getFirst().getValidFrom()))
+            .andExpect(jsonPath("$[0].certificateDetails[0].validTo").value(trackedCertificate.getCertificateDetails().getFirst().getValidTo()));
     }
 
 
