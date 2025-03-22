@@ -5,6 +5,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.trackdatcert.TestData;
 import com.trackdatcert.services.certificate.CertificateService;
 import com.trackdatcert.services.certificate.model.CertificateDetails;
 import com.trackdatcert.services.certificate.model.CertificateUsageType;
@@ -25,12 +26,13 @@ class TestCertificateController {
     @MockBean
     private CertificateService certificateService;
 
+    private CertificateDetails.CertificateDetailsBuilder certDetailsBuilder = TestData.getCertificateDetailsBuilder();
+
     @Test
     void testGetCertificates_whenSaml() throws Exception {
         Mockito.when(
                 certificateService.getCertificateDetails("www.example.com", CertificateUsageType.SAML))
-            .thenReturn(CertificateDetails.builder()
-                .build());
+            .thenReturn(certDetailsBuilder.build());
         mockMvc.perform(get("/certificates/saml?url=www.example.com"))
             .andExpect(status().isOk());
     }
@@ -39,8 +41,7 @@ class TestCertificateController {
     void testGetCertificates_whenWeb() throws Exception {
         Mockito.when(
                 certificateService.getCertificateDetails("www.example.com", CertificateUsageType.WEB))
-            .thenReturn(CertificateDetails.builder()
-                .build());
+            .thenReturn(certDetailsBuilder.build());
         mockMvc.perform(get("/certificates/web?url=www.example.com"))
             .andExpect(status().isOk());
     }
@@ -49,8 +50,7 @@ class TestCertificateController {
     void testGetCertificates_whenServer() throws Exception {
         Mockito.when(
                 certificateService.getCertificateDetails("www.example.com", CertificateUsageType.SERVER))
-            .thenReturn(CertificateDetails.builder()
-                .build());
+            .thenReturn(certDetailsBuilder.build());
         mockMvc.perform(get("/certificates/server?url=www.example.com"))
             .andExpect(status().isOk());
     }
