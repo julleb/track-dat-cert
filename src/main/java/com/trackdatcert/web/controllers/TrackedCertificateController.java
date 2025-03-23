@@ -39,7 +39,8 @@ public class TrackedCertificateController {
 
     @PatchMapping("/{name}")
     public ResponseEntity<String> updateTrackedCertificate() {
-        return ResponseEntity.noContent().build();
+        throw new UnsupportedOperationException("Not implemented");
+        //return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/{name}")
