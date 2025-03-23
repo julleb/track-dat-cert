@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 public class TrackedCertificateService {
     private final TrackedCertificateFetcher trackedCertificateFetcher;
     private final TrackedCertificateCreator trackedCertificateCreator;
+    private final TrackedCertificateDeleter trackedCertificateDeleter;
     private final AuthenticationService authenticationService;
 
 
@@ -24,6 +25,11 @@ public class TrackedCertificateService {
     public void addTrackedCertificate(TrackedCertificate trackedCertificate) {
         String userId = authenticationService.getCurrentUser();
         trackedCertificateCreator.addTrackedCertificate(trackedCertificate, userId);
+    }
+
+    public void deleteTrackedCertificate(String name) {
+        String userId = authenticationService.getCurrentUser();
+        trackedCertificateDeleter.deleteTrackedCertificate(name, userId);
     }
 
 

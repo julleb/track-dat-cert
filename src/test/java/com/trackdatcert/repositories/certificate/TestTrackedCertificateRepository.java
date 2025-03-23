@@ -72,6 +72,20 @@ class TestTrackedCertificateRepository {
 
     @Test
     @Transactional
+    void testDeleteTrackedCertificate() {
+        var certDto = certificateEntityDTOBuilder
+            .build();
+        var dto = trackedCertificateEntityDTOBuilder
+            .certificates(List.of(certDto))
+            .build();
+
+        trackedCertificateRepository.saveTrackedCertificate(dto);
+        trackedCertificateRepository.deleteTrackedCertificate(dto.getName());
+        assertThrows(EmptyResultDataAccessException.class, () -> trackedCertificateRepository.getTrackedCertificate(dto.getName()));
+    }
+
+    @Test
+    @Transactional
     void testGetTrackedCertificate_whenNotExists() {
         assertThrows(EmptyResultDataAccessException.class, () -> trackedCertificateRepository.getTrackedCertificate("nonExisting"));
     }

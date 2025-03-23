@@ -26,6 +26,22 @@ public class TrackedCertificateRepository {
 
     private final NamedParameterJdbcTemplate jdbcTemplate;
 
+    public void deleteTrackedCertificate(String name) {
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("name", name);
+        int updated = jdbcTemplate.update("DELETE FROM certificates WHERE tracked_certificates_id = " +
+            "(SELECT tracked_certificates_id FROM tracked_certificates WHERE name = :name)", params);
+        if (updated < 1) {
+            throw new IncorrectResultSizeDataAccessException("Failed to delete certificate", 1,
+                updated);
+        }
+        updated = jdbcTemplate.update("DELETE FROM tracked_certificates WHERE name = :name", params);
+        if (updated != 1) {
+            throw new IncorrectResultSizeDataAccessException("Failed to delete certificate", 1,
+                updated);
+        }
+    }
+
     public void saveTrackedCertificate(TrackedCertificateEntityDTO trackedCertificateEntityDTO) {
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("name", trackedCertificateEntityDTO.getName())
